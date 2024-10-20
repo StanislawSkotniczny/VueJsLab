@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+      Mam na imię {{ name }} {{ surname }}
+      <br>
+      czas: {{ time }}
+    </div>
+
+</body>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+const vm = Vue.createApp({
+        data() {
+            return {
+                name: "stas",
+                surname: "skotniczny",
+                time: new Date().toLocaleTimeString()
+            }
+        },
+        mounted() {
+            setInterval(() => {
+                this.time = new Date().toLocaleTimeString();
+            }, 1000);
+        }
+    }).mount("#app");
+
+</script>
+</html>
