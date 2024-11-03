@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown to HTML Converter</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="app" class="container mt-4">
+        <h2>Markdown to HTML Converter</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <textarea v-model="markdownText" class="form-control" rows="15" placeholder="Enter Markdown text here..."></textarea>
+            </div>
+            <div class="col-md-6">
+                <div v-html="convertedHtml" class="border p-3"></div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.2.37/vue.global.prod.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.10/marked.min.js"></script>
+    <script>
+      const app = Vue.createApp({
+        data() {
+          return {
+            markdownText: '# My sample header\n## hiiiii\n### Header 3\n\n**bold**\n\n*italic*'
+          };
+        },
+        computed: {
+          convertedHtml() {
+            return marked.parse(this.markdownText);
+          }
+        }
+      });
+
+      app.mount('#app');
+    </script>
+</body>
+</html>
