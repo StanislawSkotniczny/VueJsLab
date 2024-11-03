@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+    <title>Vue templates - if</title>
+    <link
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="app" class="container mt-4">
+        <h2>Dane:</h2>
+        <input
+          type="text"
+          v-model="searchQuery"
+          placeholder="Filtruj po imieniu lub nazwisku"
+          class="form-control mb-3"
+        />
+        <div class="mb-3">
+          <button class="btn btn-secondary mr-2" @click="toggleColumn('first_name')">Ukryj imie</button>
+          <button class="btn btn-secondary mr-2" @click="toggleColumn('last_name')">Ukryj nazwisko</button>
+        </div>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th v-if="visibleColumns.first_name">Imię</th>
+              <th v-if="visibleColumns.last_name">Nazwisko</th>
+              <th>Działanie</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(item, index) in filteredItems" :key="item.id">
+              <td v-if="visibleColumns.first_name">{{ item.first_name }}</td>
+              <td v-if="visibleColumns.last_name">{{ item.last_name }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm" @click="deleteRow(index)">Usuń</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      // Exercise:
+      // Display data in table
+      // 1. Use https://www.mockaroo.com/ to generate sample records (50 rows)
+      // 2. Use boostrap table and redner above data to table
+      // 3. [BONUS] Add action column with "Delete" button that will remove proper row
+      // 4. [BONUS] Add buttons to toggle columns visibility
+      // 5. [BONUS] Add live text filter for table data
+      const vm = Vue.createApp({
+        data() {
+          return {
+            items: getItems(),
+            searchQuery: "",
+            visibleColumns: {
+              first_name: true,
+              last_name: true
+            },
+          };
+        },
+        computed: {
+          filteredItems(){
+            if(!this.searchQuery){
+              return this.items
+            }
+            const lowerQuery = this.searchQuery.toLowerCase();
+            return this.items.filter(item =>
+              item.first_name.toLowerCase().includes(lowerQuery) ||
+              item.last_name.toLowerCase().includes(lowerQuery)
+            );
+          }
+        },
+        methods: {
+          deleteRow(index){
+            this.items.splice(index, 1);
+          },
+          toggleColumn(column){
+            this.visibleColumns[column] = !this.visibleColumns[column]
+          }
+        }
+      }).mount("#app");
+
+      function getItems() {
+        return [
+          {"first_name":"Kylie","last_name":"Odney"},
+{"first_name":"Hebert","last_name":"Hayer"},
+{"first_name":"Huntington","last_name":"Godsil"},
+{"first_name":"Prinz","last_name":"Di Francesco"},
+{"first_name":"Nana","last_name":"Habens"},
+{"first_name":"Bob","last_name":"Fowkes"},
+{"first_name":"Lionello","last_name":"Canada"},
+{"first_name":"Clarence","last_name":"Parell"},
+{"first_name":"Shandeigh","last_name":"Brundill"},
+{"first_name":"Laureen","last_name":"Overstall"},
+{"first_name":"Debor","last_name":"Bielefeld"},
+{"first_name":"Mathilde","last_name":"Fortman"},
+{"first_name":"Pauletta","last_name":"Mersey"},
+{"first_name":"Joni","last_name":"Pharo"},
+{"first_name":"Candice","last_name":"Hollyar"},
+{"first_name":"Richard","last_name":"Cawthra"},
+{"first_name":"Vassili","last_name":"Pretorius"},
+{"first_name":"Judy","last_name":"Larret"},
+{"first_name":"Elizabeth","last_name":"Pallent"},
+{"first_name":"Lanette","last_name":"Lynd"},
+{"first_name":"Stillmann","last_name":"Dzeniskevich"},
+{"first_name":"Brooks","last_name":"Fisk"},
+{"first_name":"Hazel","last_name":"Yurchenko"},
+{"first_name":"Kerrill","last_name":"Petlyura"},
+{"first_name":"Blaine","last_name":"Heazel"},
+{"first_name":"Wynn","last_name":"MacAleese"},
+{"first_name":"Desmund","last_name":"Witson"},
+{"first_name":"Monah","last_name":"Rosoni"},
+{"first_name":"Julia","last_name":"Bucke"},
+{"first_name":"Carmencita","last_name":"Kunzelmann"},
+{"first_name":"Essa","last_name":"Huxham"},
+{"first_name":"Milly","last_name":"Peltzer"},
+{"first_name":"Sorcha","last_name":"McCowan"},
+{"first_name":"Christabella","last_name":"Valerius"},
+{"first_name":"Hamlen","last_name":"Peatheyjohns"},
+{"first_name":"Yorgo","last_name":"Warwicker"},
+{"first_name":"Bat","last_name":"Shimwall"},
+{"first_name":"Walt","last_name":"Epine"},
+{"first_name":"Jen","last_name":"Morrison"},
+{"first_name":"Torrin","last_name":"Ortiga"},
+{"first_name":"Cacilie","last_name":"Cossor"},
+{"first_name":"Patrice","last_name":"Belhomme"},
+{"first_name":"Minda","last_name":"Grange"},
+{"first_name":"Leonid","last_name":"Babbidge"},
+{"first_name":"Kym","last_name":"Horbath"},
+{"first_name":"Hazel","last_name":"Fishwick"},
+{"first_name":"Devonne","last_name":"Borg"},
+{"first_name":"Oralla","last_name":"Midford"},
+{"first_name":"Colas","last_name":"Hynde"},
+{"first_name":"Leo","last_name":"Boulder"}
+        ];
+      }
+    </script>
+  </body>
+</html>
